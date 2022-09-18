@@ -4,6 +4,7 @@ const userRouter = require("./routers/user");
 const taskRouter = require("./routers/task");
 
 const app = express();
+// PORT variable is stored in .env file
 const port = process.env.PORT;
 
 // parse incoming JSON to objects

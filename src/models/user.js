@@ -60,12 +60,14 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// create virtual property to interact with task database
 userSchema.virtual("tasks", {
   ref: "Task",
   localField: "_id",
   foreignField: "owner",
 });
 
+// hide some information like password and token
 userSchema.methods.toJSON = function () {
   const userObject = this.toObject();
 
@@ -76,6 +78,7 @@ userSchema.methods.toJSON = function () {
   return userObject;
 };
 
+// create authentication token by jwt
 userSchema.methods.generateAuthToken = async function () {
   const token = jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET);
 
@@ -85,6 +88,7 @@ userSchema.methods.generateAuthToken = async function () {
   return token;
 };
 
+// check user's data when logging in
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email });
 

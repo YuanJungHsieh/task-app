@@ -20,6 +20,7 @@ router.post("/users", async (req, res) => {
   }
 });
 
+// user login
 router.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredentials(
@@ -33,6 +34,7 @@ router.post("/users/login", async (req, res) => {
   }
 });
 
+// user logout
 router.post("/users/logout", auth, async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
@@ -46,6 +48,7 @@ router.post("/users/logout", auth, async (req, res) => {
   }
 });
 
+// logout all users
 router.post("/users/logoutAll", auth, async (req, res) => {
   try {
     req.user.tokens = [];
@@ -56,10 +59,12 @@ router.post("/users/logoutAll", auth, async (req, res) => {
   }
 });
 
+// read user profile
 router.get("/users/me", auth, async (req, res) => {
   res.send(req.user);
 });
 
+// update user profile
 router.patch("/users/me", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["name", "email", "password", "age"];
@@ -91,11 +96,13 @@ router.delete("/users/me", auth, async (req, res) => {
   }
 });
 
+// file upload function
 const upload = multer({
   limits: {
     fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
+    // only allow image files to upload
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
       return cb(new Error("Please upload an image"));
     }
@@ -104,6 +111,7 @@ const upload = multer({
   },
 });
 
+// upload user's profile image
 router.post(
   "/users/me/avatar",
   auth,
@@ -122,12 +130,14 @@ router.post(
   }
 );
 
+// delete user's profile image
 router.delete("/users/me/avatar", auth, async (req, res) => {
   req.user.avatar = undefined;
   await req.user.save();
   res.send();
 });
 
+// delete profile image bu user ID
 router.get("/users/:id/avatar", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
