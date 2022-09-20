@@ -21,8 +21,6 @@
   - sharp
 - SendGrid
 
-#### 網站連結：https://leohsieh-weather-app.herokuapp.com
-
 -----------
 ### Functions：
 - CRUD tasks and users
@@ -44,5 +42,3 @@
   - validator
   - sharp
 - SendGrid
-
-#### Website link：https://leohsieh-weather-app.herokuapp.com
