@@ -15,7 +15,7 @@ const sendGoobyeEmail = (email, name) => {
   sgMail.send({
     to: email,
     from: "leohsieh1001@gmail.com",
-    subject: "Canclation completed",
+    subject: "Cancelation completed",
     text: `Hi ${name}, sorry to see you go, let me know if you have any suggestion!`,
   });
 };
